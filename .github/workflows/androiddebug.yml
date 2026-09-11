@@ -21,6 +21,14 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v3
 
+      - name: Configure local.properties
+        env:
+          TRAKT_CLIENT_ID: ${{ secrets.TRAKT_CLIENT_ID }}
+          TRAKT_CLIENT_SECRET: ${{ secrets.TRAKT_CLIENT_SECRET }}
+        run: |
+          echo "TRAKT_CLIENT_ID=${TRAKT_CLIENT_ID}" >> local.properties
+          echo "TRAKT_CLIENT_SECRET=${TRAKT_CLIENT_SECRET}" >> local.properties
+
       - name: Build Debug APK
         run: ./gradlew assembleDebug -Pnuvio.android.distribution=full --stacktrace
 
